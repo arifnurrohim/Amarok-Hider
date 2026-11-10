@@ -12,19 +12,10 @@
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.MAIN" />
-        </intent>
-    </queries>
 
     <application
         android:name=".AmarokApplication"
@@ -79,13 +70,7 @@
             android:name=".ui.settings.ObfuscateFileHiderSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.settings.SwitchAppHiderActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.SetHideFilesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SetHideAppActivity"
             android:exported="false" />
         <activity
             android:name=".ui.CalendarActivity"
@@ -98,12 +83,6 @@
             android:noHistory="true" />
         <activity
             android:name=".ui.SecurityAuthForQSActivity"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:noHistory="true"
-            android:theme="@style/Theme.Amarok.Transparent" />
-        <activity
-            android:name=".ui.DsmActivationActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:noHistory="true"
@@ -141,19 +120,6 @@
         </service>
 
         <receiver
-            android:name=".receivers.AdminReceiver"
-            android:exported="true"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-                <action android:name="android.app.develop.action.DEVICE_DELEGATION" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.develop.delegation"
-                android:resource="@xml/app_delegation" />
-        </receiver>
-        <receiver
             android:name=".receivers.ActionReceiver"
             android:enabled="true"
             android:exported="true"
@@ -186,27 +152,6 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
-
-        <provider
-            android:name="rikka.shizuku.ShizukuProvider"
-            android:authorities="${applicationId}.shizuku"
-            android:enabled="true"
-            android:exported="true"
-            android:multiprocess="false"
-            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
-
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="@string/xposed_desc" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="93" />
-        <meta-data
-            android:name="xposedscope"
-            android:value="android" />
 
     </application>
 

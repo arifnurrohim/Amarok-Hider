@@ -88,7 +88,7 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             tvFolderName = itemView.findViewById(R.id.hidefile_tv_foldername);
             tvPath = itemView.findViewById(R.id.hidefile_tv_path);
-            llPathItem = itemView.findViewById(R.id.hideapp_ll_pathitem);
+            llPathItem = itemView.findViewById(R.id.hidefiles_ll_pathitem);
 
             llPathItem.setOnClickListener(this);
         }

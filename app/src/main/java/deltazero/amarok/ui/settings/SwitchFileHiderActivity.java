@@ -76,7 +76,7 @@ public class SwitchFileHiderActivity extends AmarokActivity {
     }
 
     public void onClickLearnMoreButton(View view) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.hideapp_doc_url))));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.doc_url))));
     }
 
     public void onClickOKButton(View view) {
@@ -98,7 +98,7 @@ public class SwitchFileHiderActivity extends AmarokActivity {
                     .setMessage(msgResID)
                     .setPositiveButton(getString(R.string.ok), null)
                     .setNegativeButton(R.string.help, (dialog, which)
-                            -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.common_error_doc_url)))))
+                            -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.doc_url)))))
                     .show());
         }
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="apphider_none">Malŝaltita</string>
     <string name="unhide">Malkaŝi</string>
     <string name="hide">Kaŝi</string>
     <string name="cancel">Nuligi</string>
@@ -11,8 +10,6 @@
     <string name="check_update_on_start">Aŭtomate ĝisdatigi</string>
     <string name="never">Neniam</string>
     <string name="view_github_repo">GitHub-deponejo</string>
-    <string name="enable_x_hide">Ŝalti XHide</string>
-    <string name="enable_x_hide_description">Stato: %s</string>
     <string name="auto_hide">Aŭtomate kaŝi</string>
     <string name="follow_system">(laŭ sistemo)</string>
     <string name="enable_dynamic_color">Dinamika koloro</string>
@@ -25,7 +22,6 @@
     <string name="security">Sekureco</string>
     <string name="search">Serĉi</string>
     <string name="unlock">Malŝlosi</string>
-    <string name="filter">Filtri</string>
     <string name="language">Lingvo</string>
     <string name="warning">AVERTO</string>
     <string name="appearance">Aspekto</string>

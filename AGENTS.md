@@ -1,6 +1,6 @@
 # Amarok
 
-Amarok is a lightweight Android app that hides files and applications for casual privacy needs. Instead of encryption, it manages file and app visibility using various techniques.
+Amarok is a lightweight Android app that hides files for casual privacy needs. Instead of encryption, it manages file visibility using various techniques.
 
 ## Project Overview
 

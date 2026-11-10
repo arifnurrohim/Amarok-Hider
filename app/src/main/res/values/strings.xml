@@ -10,12 +10,10 @@
     <string name="ok">OK</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
-    <string name="set_hide_apps">Set Hidden Apps</string>
     <string name="setting_not_ava_when_hidden">This setting is only available after unhiding</string>
     <string name="storage_permission_request_title">Storage permission required</string>
     <string name="storage_permission_request_message">Grant Amarok access to external storage to hide files.</string>
     <string name="storage_permission_denied">Storage permission denied. File-hiding is unavailable</string>
-    <string name="apphider_not_ava">App-hiding unavailable. Check \"More Settings\" → \"Switch app-hiding mode\".</string>
     <string name="set_hide_files">Set Hidden Files</string>
     <string name="show_about">Show about</string>
     <string name="moto" translatable="false">Hunting alone in the starless night.</string>
@@ -24,7 +22,6 @@
     <string name="about_description">Shows info about the app.</string>
     <string name="usage">Usage</string>
     <string name="usage_description">Open help center.</string>
-    <string name="switch_app_hider">Switch app-hiding mode</string>
     <string name="current_mode">Current Mode: %s</string>
     <string name="more_settings">More Settings</string>
     <string name="switch_file_hider">Switch file-hiding mode</string>
@@ -33,8 +30,6 @@
     <string name="unhidden_toast">Unhidden</string>
     <string name="show_debug_info">Debug info</string>
     <string name="debug_info_description">Displays information to help troubleshoot issues.</string>
-    <string name="invalid_dsm_provider">DSM: Invalid DSM provider. Have you installed and activated the DSM provider on your device?</string>
-    <string name="hide_app_failed_admin_inactive">Could not hide app: DSM provider not active.</string>
     <string name="add_hide_files">Add hidden folder</string>
     <string name="folder_selector_hints">Hints for folder selector: \n\t 1. Click \"Use This Folder\" to select the folder\n\t 2. Always select a file on the device \n\t(Slide from the right of the screen to open local files)</string>
     <string name="remove_hide_path">Remove hidden folder?</string>
@@ -46,7 +41,6 @@
     <string name="help">Help</string>
     <string name="path_duplicated">Loop hidden folder</string>
     <string name="path_duplicated_description"><u>\'%1$s\'</u>\n\ncontains\n\n<u>\'%2$s\'</u></string>
-    <string name="no_apphider">Please select app-hiding mode in \"More settings\".</string>
     <string name="root_not_ava">Could not gain root access.</string>
     <string name="check_update_on_start">Auto update</string>
     <string name="check_update_on_start_description">Check for new versions on startup.</string>
@@ -69,22 +63,6 @@
     <string name="manually_set_path_description">Caution: Ensure the what you select manually actually exists, as this is not validated.</string>
     <string name="view_github_repo">GitHub repository</string>
     <string name="view_github_repo_description" translatable="false">deltazefiro/Amarok-Hider</string>
-    <string name="shizuku_pre_v11">Unsupported Shizuku version: Pre-v11. Please install Shizuku v11 or later.</string>
-    <string name="shizuku_permission_denied">Shizuku: Permission denied</string>
-    <string name="shizuku_not_working">Shizuku: Service unavailable. Have you installed Shizuku/Sui on your device?</string>
-    <string name="shizuku_hidden_api_error">Could not hide app: Could not access IPackageManager API.</string>
-    <string name="shizuku_service_not_running">Shizuku: Service not running.</string>
-    <string name="apphider_not_ava_title">Service unavailable</string>
-    <string name="dsm_permission_denied">DSM: Permission denied</string>
-    <string name="apphider_none">Disabled</string>
-    <string name="apphider_none_description">Turn off app-hiding.</string>
-    <string name="apphider_root">Root mode</string>
-    <string name="apphider_root_description">App-hiding with root access.\nRecommended if your device is rooted, but lacks the Xposed framework. Root permission is required.</string>
-    <string name="apphider_shizuku">Shizuku (Sui) mode</string>
-    <string name="apphider_shizuku_description">App-hiding with Shizuku (or Sui). \nRecommended if your device runs Android 11+ or has the Xposed framework. Installed and active Shizuku or Sui required.\n</string>
-    <string name="apphider_dsm">DSM mode</string>
-    <string name="apphider_dsm_description">App-hiding with Delegated-Scopes-Manager.\nNot recommended unless your device runs Android 10 or earlier and is not rooted. May be buggy and work unexpectedly. Installed Icebox (or StopAPP) set as device owner required.</string>
-    <string name="learn_more">Setup tutorial</string>
     <string name="option_unava_when_hidden">Options are unavailable until unhidden.</string>
     <string name="obfuscate_filename">Obfuscate filenames</string>
     <string name="obfuscate_filename_description">Makes the filename human-unreadable. Basic file-hiding feature that cannot be turned off.</string>
@@ -100,8 +78,6 @@
     <string name="developer_channel_telegram" translatable="false">Telegram @amarok_dev</string>
     <string name="processing">Processing…</string>
     <string name="doc_url">https://deltazefiro.github.io/Amarok-doc/en-US/</string>
-    <string name="common_error_doc_url">https://deltazefiro.github.io/Amarok-doc/en-US/hideapp.html#common-errors</string>
-    <string name="hideapp_doc_url">https://deltazefiro.github.io/Amarok-doc/en-US/hideapp.html</string>
     <string name="alert_permission_denied">Permission to display over other apps denied.</string>
     <string name="alert_permission_request_title">Permission to spawn pop-up windows required</string>
     <string name="alert_permission_request_message">The floating button needs permission to spawn pop-up windows. Please grant this permission in the settings menu under Amarok.</string>
@@ -109,7 +85,7 @@
     <string name="misc">Misc.</string>
     <string name="security">Security</string>
     <string name="panic_button">Panic button</string>
-    <string name="panic_button_description">Displays a floating button to quickly hide apps and files in an emergency. This button appears over all other apps when Amarok is unhidden.</string>
+    <string name="panic_button_description">Displays a floating button to quickly hide files in an emergency. This button appears over all other apps when Amarok is unhidden.</string>
     <string name="panic_button_color">Panic button color</string>
     <string name="panic_button_color_description">Customize the panic button color.</string>
     <string name="in_app_update_failed">New version available, but download failed. Please update manually.</string>
@@ -138,18 +114,10 @@
     <string name="password_mismatch_error">Passwords do not match.</string>
     <string name="biometric_auth">Biometric authentication</string>
     <string name="biometric_auth_description">Use the device\'s biometric authentication to access Amarok, when available.</string>
-    <string name="dhizuku_permission_denied">Dhizuku: Permission denied</string>
-    <string name="dhizuku_pre_v5">Dhizuku: Unsupported Dhizuku version. Please update Dhizuku to version 5 or higher.</string>
-    <string name="dhizuku_not_init">Dhizuku: Service unavailable. Please ensure that you have installed and activated Dhizuku.</string>
-    <string name="apphider_dhizuku">Dhizuku mode</string>
-    <string name="apphider_dhizuku_description">App-hiding with Dhizuku.\nA modern and improved solution for hiding apps on non-rooted devices. Installation and activation of the Dhizuku app are required.</string>
     <string name="force_unhide">Force unhide</string>
     <string name="force_unhide_description">Try to restore everything. Use this option only when you run into troubles.</string>
     <string name="force_unhide_confirm_msg">Try to restore everything?\n\n<b>WARNING: </b>This option may corrupt your files. Only use it when you encounter trouble and cannot perform the \"unhide\" function normally.</string>
     <string name="performing_force_unhide">Executing force unhide. Please sit tight.</string>
-    <string name="filter">Filter</string>
-    <string name="display_system_apps">Display system apps</string>
-    <string name="display_root_apps">Display root-related apps</string>
     <string name="language">Language</string>
     <string name="follow_system">(Follow system)</string>
     <string name="language_description" translatable="false">Language / 语言 / Langue / Sprache / 言語</string>
@@ -183,7 +151,7 @@
     <string name="filehider_nomedia">NoMedia Mode</string>
     <string name="filehider_nomedia_description">Simply adds .nomedia to folders. No root access required.</string>
     <string name="welcome_title">Welcome</string>
-    <string name="welcome_msg">Amarok is a free and freedom tool for hiding private files &amp; applications.\n\nPlease note that Amarok is not an encryption software, but rather a tool for hiding things. We strongly advise against using Amarok to protect confidential files and applications.\n\n<u>Disclaimers: Amarok is provided without any warranties or conditions. The user is fully responsible for any harm or consequences that may arise from using Amarok.</u></string>
+    <string name="welcome_msg">Amarok is a free and freedom tool for hiding private files.\n\nPlease note that Amarok is not an encryption software, but rather a tool for hiding things. We strongly advise against using Amarok to protect confidential files.\n\n<u>Disclaimers: Amarok is provided without any warranties or conditions. The user is fully responsible for any harm or consequences that may arise from using Amarok.</u></string>
     <string name="warning">WARNING</string>
     <string name="chmod_samsung_warning">Some Samsung users have reported that using ChmodFileHider caused their devices to fail to boot. Refer to GitHub issue #105 for more information. Use at your own risk.</string>
     <string name="appearance">Appearance</string>
@@ -193,24 +161,10 @@
     <string name="auto_hide_delay_description">The number of minutes to delay before hiding after the screen turns off.</string>
     <string name="block_screenshots">Block screenshots</string>
     <string name="block_screenshots_description">Block screenshots in Amarok and blur it in the recent apps list.</string>
-    <string name="xposed_desc">Enable Amarok to hide applications from system menus.</string>
-    <string name="x_hide" translatable="false">XHide</string>
-    <string name="x_hide_description">Utilizing Xposed to enhance app hiding. Hidden apps will no longer be visible in settings or other apps. Xposed API ≥ 93 required.</string>
-    <string name="enable_x_hide">Enable XHide</string>
-    <string name="enable_x_hide_description">Status: %s</string>
-    <string name="xposed_active">Active, Xposed API %d</string>
-    <string name="xposed_inactive">Module inactive. Check Xposed manager?</string>
-    <string name="disable_only_with_xhide">Disable apps only</string>
-    <string name="disable_only_with_xhide_description">Only disable apps and let XHide handle the hiding exclusively. May reduce lag during the hiding.</string>
     <string name="disable_toasts">Disable toasts</string>
     <string name="disable_toasts_description">Do not show toast notifications during hide or unhide actions.</string>
-    <string name="apphider_not_activated_title">App hiding inactive</string>
-    <string name="apphider_not_activated_msg">Activate an app hiding mode to enable this feature.</string>
     <string name="invert_tile_color">Invert tile color</string>
     <string name="invert_tile_color_description">By default, the quick settings tile appears activated when your privacy is visible. Toggle this option to reverse the behavior.</string>
-    <string name="warning_system_apps">Hiding system apps may cause system bootloop. Please be cautious when hiding system apps.</string>
-    <string name="warning_root_apps">Amarok is not designed for hiding root-related apps. It may cause root access loss. Consider using Dr-TSNG/Hide-My-Applist instead.</string>
-    <string name="dhizuku_failed_to_set_delegated_scopes">Dhizuku: Failed to grant `DELEGATION_PACKAGE_ACCESS`. Please try reactivating Dhizuku.</string>
     <string name="hide_from_recents">Hide from Recents</string>
     <string name="hide_from_recents_description">Hide Amarok from the recent apps screen.</string>
     <string name="hide_amarok_icon_dialog_title">Hide Amarok Icon</string>

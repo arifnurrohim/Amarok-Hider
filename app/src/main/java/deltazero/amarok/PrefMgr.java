@@ -11,12 +11,6 @@ import androidx.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-import deltazero.amarok.apphider.BaseAppHider;
-import deltazero.amarok.apphider.DhizukuAppHider;
-import deltazero.amarok.apphider.DsmAppHider;
-import deltazero.amarok.apphider.NoneAppHider;
-import deltazero.amarok.apphider.RootAppHider;
-import deltazero.amarok.apphider.ShizukuAppHider;
 import deltazero.amarok.filehider.BaseFileHider;
 import deltazero.amarok.filehider.ChmodFileHider;
 import deltazero.amarok.filehider.NoMediaFileHider;
@@ -48,8 +42,6 @@ public final class PrefMgr {
 
     public static final String HIDE_FILE_PATH = "hideFilePath";
     public static final String IS_HIDDEN = "isHidden";
-    public static final String HIDE_PKG_NAMES = "hidePkgNames";
-    public static final String APP_HIDER_MODE = "appHiderMode";
     public static final String FILE_HIDER_MODE = "fileHiderMode";
     public static final String IS_ENABLE_AUTO_UPDATE = "isEnableAutoUpdate";
     public static final String ENABLE_OBFUSCATE_FILE_HEADER = "enableObfuscateFileHeader";
@@ -67,8 +59,6 @@ public final class PrefMgr {
     public static final String ENABLE_AUTO_HIDE = "enableAutoHide";
     public static final String AUTO_HIDE_DELAY = "autoHideDelay";
     public static final String BLOCK_SCREENSHOTS = "blockScreenshots";
-    public static final String ENABLE_X_HIDE = "enableXHide";
-    public static final String DISABLE_ONLY_WITH_XHIDE = "disableOnlyWithXHide";
     public static final String DISABLE_TOASTS = "disableToasts";
     public static final String INVERT_TILE_COLOR = "invertTileColor";
     public static final String DISABLE_SECURITY_WHEN_UNHIDDEN = "disableSecurityWhenUnhidden";
@@ -99,45 +89,6 @@ public final class PrefMgr {
 
     public static void setIsHidden(boolean isHidden) {
         mPrefEditor.putBoolean(IS_HIDDEN, isHidden);
-        mPrefEditor.apply();
-    }
-
-    public static Set<String> getHideApps() {
-        // Return a defensive copy to avoid SharedPreferences caching issues
-        return new HashSet<>(mPrefs.getStringSet(HIDE_PKG_NAMES, new HashSet<>()));
-    }
-
-    public static void setHideApps(Set<String> pkgNames) {
-        mPrefEditor.putStringSet(HIDE_PKG_NAMES, pkgNames);
-        mPrefEditor.apply();
-    }
-
-    public static BaseAppHider getAppHider(Context context) {
-        return switch (mPrefs.getInt(APP_HIDER_MODE, 0)) {
-            case 0 -> new NoneAppHider(context);
-            case 1 -> new RootAppHider(context);
-            case 2 -> new DsmAppHider(context);
-            case 3 -> new ShizukuAppHider(context);
-            case 4 -> new DhizukuAppHider(context);
-            default -> throw new IndexOutOfBoundsException("Should not reach here");
-        };
-    }
-
-    public static void setAppHiderMode(Class<? extends BaseAppHider> mode) {
-        int modeCode;
-        if (mode == NoneAppHider.class)
-            modeCode = 0;
-        else if (mode == RootAppHider.class)
-            modeCode = 1;
-        else if (mode == DsmAppHider.class)
-            modeCode = 2;
-        else if (mode == ShizukuAppHider.class)
-            modeCode = 3;
-        else if (mode == DhizukuAppHider.class)
-            modeCode = 4;
-        else
-            throw new IndexOutOfBoundsException("Should not reach here");
-        mPrefEditor.putInt(APP_HIDER_MODE, modeCode);
         mPrefEditor.apply();
     }
 
@@ -310,24 +261,6 @@ public final class PrefMgr {
 
     public static void setBlockScreenshots(boolean blockScreenshots) {
         mPrefEditor.putBoolean(BLOCK_SCREENSHOTS, blockScreenshots);
-        mPrefEditor.apply();
-    }
-
-    public static boolean isXHideEnabled() {
-        return mPrefs.getBoolean(ENABLE_X_HIDE, false);
-    }
-
-    public static void setXHideEnabled(boolean enableXHide) {
-        mPrefEditor.putBoolean(ENABLE_X_HIDE, enableXHide);
-        mPrefEditor.apply();
-    }
-
-    public static boolean getDisableOnlyWithXHide() {
-        return mPrefs.getBoolean(DISABLE_ONLY_WITH_XHIDE, false);
-    }
-
-    public static void setDisableOnlyWithXHide(boolean disableOnlyWithXHide) {
-        mPrefEditor.putBoolean(DISABLE_ONLY_WITH_XHIDE, disableOnlyWithXHide);
         mPrefEditor.apply();
     }
 

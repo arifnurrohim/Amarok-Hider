@@ -13,22 +13,11 @@ import deltazero.amarok.R;
 
 public class WorkmodeCategory extends BaseCategory {
 
-    Preference switchAppHiderPref, switchFileHiderPref;
+    Preference switchFileHiderPref;
 
     public WorkmodeCategory(@NonNull FragmentActivity activity, PreferenceScreen screen) {
         super(activity, screen);
         setTitle(R.string.workmode);
-
-        switchAppHiderPref = new Preference(activity);
-        switchAppHiderPref.setKey(PrefMgr.APP_HIDER_MODE);
-        switchAppHiderPref.setTitle(R.string.switch_app_hider);
-        switchAppHiderPref.setIntent(new Intent(activity, SwitchAppHiderActivity.class));
-        switchAppHiderPref.setOnPreferenceChangeListener((preference, newValue) -> {
-            preference.setSummary(activity.getString(R.string.current_mode, PrefMgr.getAppHider(activity).getName()));
-            return true;
-        });
-        switchAppHiderPref.setIcon(R.drawable.apps_black_24dp);
-        addPreference(switchAppHiderPref);
 
         switchFileHiderPref = new Preference(activity);
         switchFileHiderPref.setKey(PrefMgr.FILE_HIDER_MODE);
@@ -44,7 +33,6 @@ public class WorkmodeCategory extends BaseCategory {
 
     @Override
     protected void onUpdate() {
-        switchAppHiderPref.callChangeListener(PrefMgr.getAppHider(activity).getName());
         switchFileHiderPref.callChangeListener(PrefMgr.getFileHider(activity).getName());
     }
 }

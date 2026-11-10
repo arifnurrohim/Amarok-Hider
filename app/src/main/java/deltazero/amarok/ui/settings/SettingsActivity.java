@@ -93,7 +93,6 @@ public class SettingsActivity extends AmarokActivity implements
 
             categories = new BaseCategory[]{
                     new WorkmodeCategory(requireActivity(), screen),
-                    new XHideCategory(requireActivity(), screen),
                     new PrivacyCategory(requireActivity(), screen),
                     new QuickHideCategory(requireActivity(), screen),
                     new AppearanceCategory(requireActivity(), screen),

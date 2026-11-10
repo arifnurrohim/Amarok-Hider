@@ -11,9 +11,9 @@
 
 ## What is Amarok?
 
-Amarok is a lightweight Android privacy tool that shields your files and apps from prying eyes without the overhead of encryption.
+Amarok is a lightweight Android privacy tool that shields your files from prying eyes without the overhead of encryption.
 
-Traditional encryption tools are secure but slow — decrypting a large movie file or unlocking an app takes time. Amarok acts instantly. It conceals files by obfuscating signatures or adjusting permissions, and hides apps by disabling them or using Xposed hooks. This makes your content invisible to casual snoopers without any performance penalty.  
+Traditional encryption tools are secure but slow — decrypting a large movie file or unlocking an app takes time. Amarok acts instantly. It conceals files by obfuscating signatures or adjusting permissions. This makes your content invisible to casual snoopers without any performance penalty.  
 
 > [!WARNING]
 > **Amarok is NOT an encryption tool.**  
@@ -21,12 +21,9 @@ Traditional encryption tools are secure but slow — decrypting a large movie fi
 
 ## Features
 
-* **One-Click Privacy**: Instantly hide or unhide your selected files and apps.
+* **One-Click Privacy**: Instantly hide or unhide your selected files.
 * **High-Speed Performance**: Hides large files instantly by altering signatures (Non-root) or adjusting file permissions (Root).
-* **Versatile App Hiding**:
-  * **Root-Free Support**: Hides apps from the launcher (supports Shizuku, Dhizuku, and DSM modes).
-  * **Root Support**: Leverages Xposed to *thoroughly* scrub apps from system menus and 3rd-party detection.
-* **Panic Button**: A discreet floating button to instantly hide everything.
+* **Panic Button**: A discreet floating button to instantly hide your files.
 * **Quick Settings Tile**: Toggle visibility directly from your control center without opening the main app.
 * **Secure Access**: Protect Amarok itself with a Password or Fingerprint lock.
 * **Camouflage Mode**: Disguise Amarok as a Calendar app.
@@ -54,7 +51,7 @@ Traditional encryption tools are secure but slow — decrypting a large movie fi
 
 ## Documentation & Usage
 
-New to Amarok? Check out our documentation for setup guides on Root, Shizuku, Dhizuku, and other app hiders.
+New to Amarok? Check out our documentation for setup guides and usage tips.
 
 [![](https://img.shields.io/badge/AmarokDocs-ClickToView-brightgreen)](https://deltazefiro.github.io/Amarok-doc/en-US/)  
 
@@ -76,8 +73,6 @@ We use [weblate](https://hosted.weblate.org/engage/amarok-hider/) for translatio
 
 A massive thank you to the open-source community:
 
-* **[aistra0528/Hail](https://github.com/aistra0528/Hail):** Core reference for the app hiding logic.
-* **[RikkaApps/Shizuku](https://github.com/RikkaApps/Shizuku) & [iamr0s/Dhizuku](https://github.com/iamr0s/Dhizuku):** For enabling root-less permissions.
 * **[Icongeek26](https://www.flaticon.com/authors/icongeek26) & [Freepik](https://www.freepik.com):** For the beautiful iconography.
 * **[Jetbrains](https://www.jetbrains.com/community/opensource/#support):** For providing IDE support.
 

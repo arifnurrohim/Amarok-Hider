@@ -1,30 +1,35 @@
-name: Build on push
+name: Build
 
-on: 
-  - push
-  - pull_request
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  # validate-metadata:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Validate Fastlane metadata
-  #       uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2
-  #       with:
-  #         fastlaneDir: ./fastlane/metadata/android
-  #         usePlayStoreLocales: false
-
   build:
+    name: Build APKs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup JDK
-        uses: actions/setup-java@v3
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'gradle'
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: "platforms;android-36 build-tools;36.0.0 platform-tools"
+
       - name: Build with Gradle
         run: |
           echo 'org.gradle.caching=true' >> gradle.properties
@@ -32,14 +37,13 @@ jobs:
           echo 'org.gradle.vfs.watch=true' >> gradle.properties
           echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
           echo 'android.native.buildOutput=verbose' >> gradle.properties
-          ./gradlew assembleFossDebug \
-          -Pandroid.injected.signing.store.file="${{ github.workspace }}/debug.keystore" \
-          -Pandroid.injected.signing.store.password="android" \
-          -Pandroid.injected.signing.key.alias="androiddebugkey" \
-          -Pandroid.injected.signing.key.password="android"
-      - name: Upload built apk
+          bash ./gradlew assemble --console=plain
+
+      - name: Upload built APKs
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          path: |
-            ${{ github.workspace }}/app/build/outputs/apk/foss/debug/*.apk
+          name: Amarok-apks
+          path: app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+          retention-days: 14

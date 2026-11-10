@@ -6,7 +6,6 @@
     <string name="hidden_status">숨김</string>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
-    <string name="set_hide_apps">숨기는 앱 설정하기</string>
     <string name="setting_not_ava_when_hidden">이 설정은 숨었을 때 변경할 수 없습니다.</string>
     <string name="storage_permission_request_title">저장소 권한 필요</string>
     <string name="storage_permission_request_message">Amarok이 파일을 숨길 수 있게 외부 저장소 권한을 허용하십시오.</string>
@@ -17,7 +16,6 @@
     <string name="about_description">앱의 소개를 보여줍니다.</string>
     <string name="usage">사용법</string>
     <string name="usage_description">도움 센터 열기.</string>
-    <string name="switch_app_hider">앱 숨김 모드 바꾸기</string>
     <string name="current_mode">현재 모드: %s</string>
     <string name="more_settings">더 많은 설정</string>
     <string name="switch_file_hider">파일 숨김 모드 바꾸기</string>
@@ -39,13 +37,10 @@
     <string name="update_description">Amarok %s (%d) 버전으로 다운로드 및 업데이트 가능</string>
     <string name="manually_set_path_description">주의: 파일이 존재하는지 검사를 하지 않으니 꼭 확인해 주십시오.</string>
     <string name="view_github_repo">GitHub repository</string>
-    <string name="shizuku_pre_v11">Pre-v11의 Shizuku 버전을 지원하지 않습니다. Shizuku v11 또는 이상을 설치해 주십시오.</string>
     <string name="hidden_toast">파일 숨겨짐. 히힛!</string>
     <string name="unhidden_toast">파일 보임. 주의하세요.</string>
     <string name="show_debug_info">디버그 정보</string>
     <string name="debug_info_description">문제 해결에 도움이 되는 정보 표시.</string>
-    <string name="hide_app_failed_admin_inactive">앱 숨길 수 없음: DSM 공급자 비활성화</string>
-    <string name="invalid_dsm_provider">DSM: DSM 공급자 정보가 맞지 않습니다. DSM을 설치하고 활성화 하였는지 확인하여 주십시오.</string>
     <string name="check_update_on_start_description">Amarok 앱을 열 때 자동으로 업데이트를 확인합니다.</string>
     <string name="check_update">업데이트 확인하기</string>
     <string name="update">업데이트</string>
@@ -54,9 +49,7 @@
     <string name="check_update_description">현재 버전: %s</string>
     <string name="update_ava">업데이트 가능</string>
     <string name="no_update_ava">최신 버전입니다.</string>
-    <string name="apphider_none_description">‘</string>
     <string name="folder_selector_hints">폴더 선택기 팁:</string>
     <string name="show_about">정보 보기</string>
-    <string name="apphider_not_ava">앱 숨기기를 사용할 수 없습니다. \'추가 설정\' → \'앱 숨김 모드 전환\'을 확인하세요.</string>
     <string name="about">정보</string>
 </resources>

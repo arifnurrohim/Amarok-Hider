@@ -7,11 +7,9 @@ import android.content.IntentFilter;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.color.DynamicColors;
-import com.rosan.dhizuku.api.Dhizuku;
 
 import deltazero.amarok.receivers.ScreenStatusReceiver;
 import deltazero.amarok.utils.AppCenterUtil;
-import deltazero.amarok.utils.XHidePrefBridge;
 import deltazero.amarok.widget.ToggleWidget;
 import jonathanfinerty.once.Once;
 
@@ -22,7 +20,6 @@ public class AmarokApplication extends Application {
         super.onCreate();
 
         // WARNING: Do not change the order of those initializations.
-        XHidePrefBridge.migratePrefsIfNeeded(this);
         PrefMgr.init(this);
         Hider.init();
         QSTileService.init(getApplicationContext());
@@ -40,17 +37,11 @@ public class AmarokApplication extends Application {
         screenStatusIntentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(new ScreenStatusReceiver(), screenStatusIntentFilter);
 
-        // Initialise XHidePrefBridge
-        XHidePrefBridge.init(this);
-
         // Start PanicButton service
         QuickHideService.startService(this);
 
         // Start App-center
         AppCenterUtil.startAppCenter(this);
-
-        // init Dhizuku
-        Dhizuku.init();
 
         // init Once
         Once.initialise(this);
