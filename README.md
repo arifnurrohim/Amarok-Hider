@@ -1,84 +1,176 @@
+<p align="center">
+  <img src="fastlane/metadata/android/en-US/images/featureGraphic.png" alt="Amarok banner" width="720">
+</p>
 
-![banner](https://github.com/user-attachments/assets/63a8fc76-30a0-4460-85be-4264b1f69334)
+<h1 align="center">Amarok</h1>
 
-# Amarok-Hider
+<p align="center">
+  A lightweight file hider for Android — privacy without encryption overhead.
+</p>
 
-[![](https://img.shields.io/github/v/release/deltazefiro/Amarok-Hider?label=GithubRelease)](https://github.com/deltazefiro/Amarok-Hider/releases)
-[![](https://img.shields.io/f-droid/v/deltazero.amarok.foss?color=blue)](https://f-droid.org/zh_Hans/packages/deltazero.amarok.foss/)
-[![](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/deltazero.amarok.foss&color=orange)](https://apt.izzysoft.de/fdroid/index/apk/deltazero.amarok.foss)
+<p align="center">
+  <img alt="Android 8.0+" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white">
+  <img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
+  <img alt="Unofficial fork" src="https://img.shields.io/badge/fork-of%20deltazefiro%2FAmarok--Hider-blue">
+</p>
 
-🌐 **ENGLISH** | [简体中文](https://github.com/deltazefiro/Amarok-Hider/blob/main/README.zh.md)
+> [!NOTE]
+> This is an unofficial, file-only fork of
+> [deltazefiro/Amarok-Hider](https://github.com/deltazefiro/Amarok-Hider),
+> based on upstream v0.10.1. It is not affiliated with the upstream project,
+> F-Droid, or IzzyOnDroid. For official builds and documentation, use upstream.
 
 ## What is Amarok?
 
-Amarok is a lightweight Android privacy tool that shields your files from prying eyes without the overhead of encryption.
-
-Traditional encryption tools are secure but slow — decrypting a large movie file or unlocking an app takes time. Amarok acts instantly. It conceals files by obfuscating signatures or adjusting permissions. This makes your content invisible to casual snoopers without any performance penalty.  
+Amarok hides selected files by obfuscating filenames and, optionally, file
+headers or contents. It is built for casual privacy: hiding a file is fast and
+does not require encrypting a large movie or archive first.
 
 > [!WARNING]
 > **Amarok is NOT an encryption tool.**  
-> Amarok hides data but does not cryptographically secure it. Do not use this tool for high-value secrets.
+> It hides data but does not protect it cryptographically. Do not use it for
+> high-value secrets.
+
+## What this fork changes
+
+- **File-only focus** — app-hiding functionality and its related UI were removed.
+- **Large-folder reliability** — the file tree is snapshotted before renaming,
+  files are processed before directories, and post-hide media scans are skipped.
+- **Safer folder renaming** — folder-name obfuscation is opt-in and disabled by
+  default. Existing obfuscated folder names are still restored when unhiding.
+- **Long filename support** — names that exceed Android's filename limit are
+  compressed, or mapped through a local hash-to-name table.
+- **Visible, recoverable operations** — progress notification, cancel action,
+  wake lock, 60-second watchdog, and a journal that offers recovery after a crash
+  or forced stop.
+- **GitHub Actions** — debug builds on push/PR, signed FOSS releases on `v*` tags.
 
 ## Features
 
-* **One-Click Privacy**: Instantly hide or unhide your selected files.
-* **High-Speed Performance**: Hides large files instantly by altering signatures (Non-root) or adjusting file permissions (Root).
-* **Panic Button**: A discreet floating button to instantly hide your files.
-* **Quick Settings Tile**: Toggle visibility directly from your control center without opening the main app.
-* **Secure Access**: Protect Amarok itself with a Password or Fingerprint lock.
-* **Camouflage Mode**: Disguise Amarok as a Calendar app.
+- **One-click privacy** — hide or unhide selected files instantly.
+- **Fast on large files** — rename and header obfuscation avoid rewriting file
+  contents by default.
+- **Flexible hiding** — filename obfuscation without root; optional root-based
+  permission hiding.
+- **Panic button** — a discreet floating button for quick hiding.
+- **Quick Settings tile** — toggle visibility without opening the app.
+- **Secure access** — protect Amarok with a password or fingerprint.
+- **Camouflage mode** — disguise Amarok as a calendar app.
 
-## Screenshots
+## Install
 
-<table>
-  <tr>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/b3fe6b18-cb3e-488b-81cb-ff5ed005664b" alt="Image 1"></td>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/1a6f147c-286a-428c-9470-a469b4dd9f4e" alt="Image 2"></td>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/9b61b94f-26f2-4457-b189-93c75a09e7d5" alt="Image 3"></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/9ef70932-c242-4cc6-a84d-5b14ddf8a814" alt="Image 4"></td>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/3702143d-dac5-435d-9615-323ada02c63e" alt="Image 5"></td>
-    <td><img src="https://github.com/deltazefiro/Amarok-Hider/assets/41465688/a2016488-0c13-4144-93ed-5ca35179df79" alt="Image 6"></td>
-  </tr>
-</table>
+Prebuilt APKs are published on the **Releases** page of this repository.
 
-## Download
+- Package name: `deltazero.amarok.foss`
+- Minimum Android version: Android 8.0 (API 26)
+- Recommended flavor: `foss`
 
-[![](https://img.shields.io/github/v/release/deltazefiro/Amarok-Hider?label=GithubRelease)](https://github.com/deltazefiro/Amarok-Hider/releases)  
-[![](https://img.shields.io/f-droid/v/deltazero.amarok.foss?color=blue)](https://f-droid.org/zh_Hans/packages/deltazero.amarok.foss/) (FOSS)  
-[![](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/deltazero.amarok.foss&color=orange)](https://apt.izzysoft.de/fdroid/index/apk/deltazero.amarok.foss)  (FOSS) (Pre-release channel)
+For local testing:
 
-## Documentation & Usage
+```bash
+adb install -r Amarok-<version>-foss.apk
+```
 
-New to Amarok? Check out our documentation for setup guides and usage tips.
+## Build from source
 
-[![](https://img.shields.io/badge/AmarokDocs-ClickToView-brightgreen)](https://deltazefiro.github.io/Amarok-doc/en-US/)  
+### Requirements
+
+- JDK 17 or newer
+- Android SDK Platform 36 and Build-Tools 36.0.0
+- The included Gradle wrapper
+
+```bash
+git clone <this-repository-url>
+cd Amarok
+
+# Debug FOSS build
+./gradlew assembleFossDebug
+
+# Release FOSS build
+./gradlew assembleFossRelease
+```
+
+Output paths:
+
+```text
+app/build/outputs/apk/foss/debug/
+app/build/outputs/apk/foss/release/
+```
+
+Release builds are unsigned unless signing properties are provided:
+
+```bash
+./gradlew assembleFossRelease \
+  -PRELEASE_STORE_FILE=/path/to/release.keystore \
+  -PRELEASE_STORE_PASSWORD=your-store-password \
+  -PRELEASE_KEY_ALIAS=your-key-alias \
+  -PRELEASE_KEY_PASSWORD=your-key-password
+```
+
+Never commit a keystore or its passwords.
+
+## GitHub Actions
+
+| Workflow | Trigger | Result |
+| --- | --- | --- |
+| `Build` | Push, pull request, or manual run | FOSS debug APK artifact |
+| `Release` | Push of a `v*` tag | Signed FOSS APK + SHA-256 on GitHub Releases |
+
+The release workflow reads the version from the tag (`v1.2.3` → `1.2.3`) and
+uses the commit count as `versionCode`.
+
+Add these repository secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret | Required | Description |
+| --- | --- | --- |
+| `KEYSTORE_BASE64` | Yes | Base64-encoded release keystore |
+| `KEYSTORE_PASSWORD` | Yes | Keystore password |
+| `KEY_ALIAS` | No | Key alias (defaults to `amarok`) |
+| `KEY_PASSWORD` | No | Key password (defaults to the keystore password) |
+
+Publish a release:
+
+```bash
+git tag v0.10.1
+git push origin v0.10.1
+```
+
+## Project layout
+
+```text
+app/src/main/java/     Application source
+app/src/main/res/      Resources and translations
+app/src/foss/          FOSS flavor
+app/src/playstore/     Play Store flavor
+app/src/appcenter/     AppCenter flavor
+fastlane/metadata/     Store metadata and changelogs
+.github/workflows/     Build and release automation
+```
 
 ## Contributing
 
-Thank you for dedicating your time to contribute to this project!
-Contributions in all forms are welcomed, including reporting bugs, proposing new features, performing language translations, and submitting code development PRs.
+Bug reports, feature requests, and code contributions for this fork are welcome.
+Please open an issue or pull request in this repository.
 
-> 🤖 **Tips for AI Assistants**  
-> Please consult `.cursor/rules` for a overview of the project structure.
-
-We use [weblate](https://hosted.weblate.org/engage/amarok-hider/) for translations.
-
-<a href="https://hosted.weblate.org/engage/amarok-hider/">
-<img src="https://hosted.weblate.org/widgets/amarok-hider/-/multi-auto.svg" alt="Translation status" />
-</a>
+Translation work should target the
+[upstream Weblate project](https://hosted.weblate.org/engage/amarok-hider/).
 
 ## Credits
 
-A massive thank you to the open-source community:
+- **[deltazefiro/Amarok-Hider](https://github.com/deltazefiro/Amarok-Hider)** —
+  the original project this fork is based on.
+- **[Icongeek26](https://www.flaticon.com/authors/icongeek26) &
+  [Freepik](https://www.freepik.com)** — iconography.
+- **[JetBrains](https://www.jetbrains.com/community/opensource/#support)** — IDE
+  support.
+- All upstream contributors and translators.
 
-* **[Icongeek26](https://www.flaticon.com/authors/icongeek26) & [Freepik](https://www.freepik.com):** For the beautiful iconography.
-* **[Jetbrains](https://www.jetbrains.com/community/opensource/#support):** For providing IDE support.
+## License
 
-... and all the dedicated [contributors](https://github.com/deltazefiro/Amarok-Hider/graphs/contributors)!
+Licensed under the [Apache License 2.0](LICENSE).
 
 ## Disclaimers
 
-**Amarok is provided "as is" without any warranties or conditions.**
-The user is fully responsible for any harm, data loss, or consequences that may arise from using Amarok. Please backup important data before using hiding tools.
+**Amarok is provided "as is" without warranties or conditions of any kind.**
+You are fully responsible for any harm, data loss, or consequences resulting
+from its use. Back up important data before using file-hiding tools.
