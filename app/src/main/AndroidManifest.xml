@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".AmarokApplication"
@@ -109,6 +110,14 @@
             <property
                 android:name="deltazero.amarok.SPECIAL_USE_QUICK_HIDE"
                 android:value="For the display of a system-wide panic button" />
+        </service>
+        <service
+            android:name=".HiderService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="deltazero.amarok.SPECIAL_USE_HIDER"
+                android:value="For long-running file hiding and unhiding operations" />
         </service>
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"

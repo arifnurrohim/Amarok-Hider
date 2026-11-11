@@ -66,6 +66,10 @@
     <string name="option_unava_when_hidden">Options are unavailable until unhidden.</string>
     <string name="obfuscate_filename">Obfuscate filenames</string>
     <string name="obfuscate_filename_description">Makes the filename human-unreadable. Basic file-hiding feature that cannot be turned off.</string>
+    <string name="obfuscate_folder_name">Obfuscate folder names</string>
+    <string name="obfuscate_folder_name_description">Also renames subfolders. Disabled by default because renaming folders in large directories can be slow or freeze the file manager. Existing obfuscated folder names are always restored when unhiding.</string>
+    <string name="obfuscate_folder_name_warning_title">Enable folder-name obfuscation?</string>
+    <string name="obfuscate_folder_name_warning_message">Renaming folders can force MediaProvider to update every file inside them. This may be slow or cause system freezes on some devices. Keep this disabled unless you need it.</string>
     <string name="obfuscate_file_header">Obfuscate file headers</string>
     <string name="obfuscate_file_header_description">Obfuscates the file signature in the file header to make the file appear corrupted. Prevents the file from being opened manually with \"Open With\", but may slow down the hiding process.</string>
     <string name="filename_only">Filenames only</string>
@@ -77,6 +81,22 @@
     <string name="join_developer_channel">Telegram group</string>
     <string name="developer_channel_telegram" translatable="false">Telegram @amarok_dev</string>
     <string name="processing">Processing…</string>
+    <string name="operation_phase_starting">Starting…</string>
+    <string name="operation_phase_scanning">Scanning files…</string>
+    <string name="operation_phase_files">Renaming files…</string>
+    <string name="operation_phase_folders">Renaming folders…</string>
+    <string name="operation_phase_finalizing">Finalizing…</string>
+    <string name="operation_hiding_title">Hiding files</string>
+    <string name="operation_unhiding_title">Unhiding files</string>
+    <string name="operation_progress">%1$d / %2$d · %3$s</string>
+    <string name="operation_stalled">No progress for 60 seconds. Cancel if possible; a reboot may be required.</string>
+    <string name="operation_stalled_notification">Stalled at %1$d / %2$d</string>
+    <string name="operation_channel_name">File operations</string>
+    <string name="operation_failed">Operation failed. Some files may still be hidden.</string>
+    <string name="previous_operation_title">Previous operation did not finish</string>
+    <string name="previous_operation_message">Amarok stopped while %1$s at %2$d / %3$d (%4$s). Some files may still be hidden or visible.</string>
+    <string name="previous_operation_unhide">Unhide</string>
+    <string name="previous_operation_dismiss">Dismiss</string>
     <string name="doc_url">https://deltazefiro.github.io/Amarok-doc/en-US/</string>
     <string name="alert_permission_denied">Permission to display over other apps denied.</string>
     <string name="alert_permission_request_title">Permission to spawn pop-up windows required</string>

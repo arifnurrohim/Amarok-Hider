@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -32,13 +33,27 @@ public class AutoHideUtil {
         @Override
         public Result doWork() {
             Log.i(TAG, "Auto hide triggered. Start hiding.");
-            Hider.hide(getApplicationContext());
-            return Result.success();
+            try {
+                boolean completed = Hider.hideAndWait(
+                        getApplicationContext(), 9, TimeUnit.MINUTES);
+                if (completed)
+                    return Result.success();
+
+                Log.w(TAG, "Auto hide did not finish before the worker timeout.");
+                return Result.failure();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                Log.w(TAG, "Auto hide worker interrupted.", e);
+                return Result.retry();
+            }
         }
     }
 
     public static void setAutoHide(Context context) {
-        if (!PrefMgr.getEnableAutoHide() || Hider.getState() == Hider.State.HIDDEN) return;
+        if (!PrefMgr.getEnableAutoHide()
+                || Hider.getState() == Hider.State.HIDDEN
+                || Hider.isProcessing())
+            return;
         Log.i(TAG, "Auto hide set. Delay: " + PrefMgr.getAutoHideDelay() + " minutes.");
         WorkManager.getInstance(context).enqueueUniqueWork(
                 AUTO_HIDE_WORK_NAME,
@@ -51,19 +66,20 @@ public class AutoHideUtil {
 
     public static void cancelAutoHide(Context context) {
         var workManager = WorkManager.getInstance(context);
-
         var future = workManager.getWorkInfosForUniqueWork(AUTO_HIDE_WORK_NAME);
-        List<WorkInfo> workInfos;
-        try {
-            workInfos = future.get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException("Should not happen.", e);
-        }
 
-        if (workInfos.size() == 0) return;
-        if (workInfos.get(0).getState() != WorkInfo.State.RUNNING) {
-            workManager.cancelUniqueWork(AUTO_HIDE_WORK_NAME);
-            Log.i(TAG, "Auto hide cancelled.");
-        }
+        future.addListener(() -> {
+            try {
+                List<WorkInfo> workInfos = future.get();
+                if (workInfos.isEmpty())
+                    return;
+                if (workInfos.get(0).getState() != WorkInfo.State.RUNNING) {
+                    workManager.cancelUniqueWork(AUTO_HIDE_WORK_NAME);
+                    Log.i(TAG, "Auto hide cancelled.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                Log.w(TAG, "Unable to cancel auto hide.", e);
+            }
+        }, ContextCompat.getMainExecutor(context));
     }
 }

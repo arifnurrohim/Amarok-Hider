@@ -11,14 +11,17 @@ def getGitHash = { ->
     return stdout.toString().trim()
 }
 
+def buildVersionName = project.findProperty("VERSION_NAME") ?: "0.10.1"
+def buildVersionCode = (project.findProperty("VERSION_CODE") ?: "124").toString().toInteger()
+
 android {
     defaultConfig {
         applicationId "deltazero.amarok"
         minSdkVersion 26
         targetSdkVersion 36
         compileSdk = 36
-        versionCode 124
-        versionName "0.10.1"
+        versionCode buildVersionCode
+        versionName buildVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -42,7 +45,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release

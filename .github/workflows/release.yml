@@ -1,54 +1,118 @@
 name: Release
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published, edited]
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  release:
+    name: Build and publish
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out source
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'gradle'
-      - name: Inject signing key
+
+      - name: Validate signing secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
-          echo 'RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}' >> ~/.gradle/gradle.properties
-          echo 'RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}' >> ~/.gradle/gradle.properties
-          echo 'RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}' >> ~/.gradle/gradle.properties
-          echo 'RELEASE_STORE_FILE=${{ github.workspace }}/keystore.jks' >> ~/.gradle/gradle.properties
-          echo '${{ secrets.KEY_STORE }}' | base64 --decode > ${{ github.workspace }}/keystore.jks
-      - name: Build with Gradle
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$KEYSTORE_PASSWORD" ]; then
+            echo "::error::Add KEYSTORE_BASE64 and KEYSTORE_PASSWORD repository secrets before publishing."
+            exit 1
+          fi
+
+      - name: Set release version
         run: |
-          echo 'org.gradle.caching=true' >> gradle.properties
-          echo 'org.gradle.parallel=true' >> gradle.properties
-          echo 'org.gradle.vfs.watch=true' >> gradle.properties
-          echo 'org.gradle.jvmargs=-Xmx2048m' >> gradle.properties
-          echo 'android.native.buildOutput=verbose' >> gradle.properties
-          ./gradlew assembleRelease
-      - name: Upload built apk
-        if: success()
-        uses: actions/upload-artifact@v4
+          VERSION_NAME="${GITHUB_REF_NAME#v}"
+          if ! printf '%s' "$VERSION_NAME" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$'; then
+            echo "::error::Tag must look like v1.2.3 (optionally v1.2.3-beta.1)."
+            exit 1
+          fi
+          VERSION_CODE="$(git rev-list --count HEAD)"
+          echo "VERSION_NAME=$VERSION_NAME" >> "$GITHUB_ENV"
+          echo "VERSION_CODE=$VERSION_CODE" >> "$GITHUB_ENV"
+          echo "Building Amarok $VERSION_NAME ($VERSION_CODE)"
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
         with:
-          path: |
-              ${{ github.workspace }}/app/build/outputs/apk/**/*.apk
-      - name: Upload release asset (AppCenter)
-        if: success()
-        uses: shogo82148/actions-upload-release-asset@v1
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
         with:
-         upload_url: ${{ github.event.release.upload_url }}
-         asset_path: ${{ github.workspace }}/app/build/outputs/apk/appcenter/**/*.apk
-      - name: Upload release asset (FOSS)
-        if: success()
-        uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ github.workspace }}/app/build/outputs/apk/foss/**/*.apk
+          packages: "platforms;android-36 build-tools;36.0.0 platform-tools"
+
+      - name: Decode release keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/amarok-release.keystore"
+          test -s "$RUNNER_TEMP/amarok-release.keystore"
+
+      - name: Configure signing
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS || 'amarok' }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD || secrets.KEYSTORE_PASSWORD }}
+        run: |
+          mkdir -p "$HOME/.gradle"
+          {
+            echo "RELEASE_STORE_FILE=$RUNNER_TEMP/amarok-release.keystore"
+            echo "RELEASE_STORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "RELEASE_KEY_ALIAS=$KEY_ALIAS"
+            echo "RELEASE_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$HOME/.gradle/gradle.properties"
+
+      - name: Build release APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleFossRelease \
+            -PVERSION_NAME="$VERSION_NAME" \
+            -PVERSION_CODE="$VERSION_CODE" \
+            --console=plain
+
+      - name: Prepare release assets
+        run: |
+          ASSET="Amarok-${VERSION_NAME}-foss.apk"
+          cp "app/build/outputs/apk/foss/release/Amarok-v${VERSION_NAME}-foss.apk" "$ASSET"
+          sha256sum "$ASSET" > "$ASSET.sha256"
+          echo "ASSET=$ASSET" >> "$GITHUB_ENV"
+
+      - name: Extract release notes
+        run: |
+          NOTES="$RUNNER_TEMP/release-notes.md"
+          CHANGELOG="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+          if [ -f "$CHANGELOG" ]; then
+            cp "$CHANGELOG" "$NOTES"
+          else
+            echo "Amarok ${VERSION_NAME} for Android." > "$NOTES"
+          fi
+          cat "$NOTES"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          NOTES="$RUNNER_TEMP/release-notes.md"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" --notes-file "$NOTES"
+            gh release upload "$TAG" "$ASSET" "$ASSET.sha256" --clobber
+          else
+            gh release create "$TAG" \
+              "$ASSET#Amarok ${VERSION_NAME} FOSS APK" \
+              "$ASSET.sha256#SHA-256 checksum" \
+              --title "Amarok ${VERSION_NAME}" \
+              --notes-file "$NOTES" \
+              --verify-tag
+          fi

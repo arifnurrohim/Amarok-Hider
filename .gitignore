@@ -10,5 +10,8 @@
 .cxx
 local.properties
 tmp/
+*.jks
+*.keystore
+/release/
 app/.settings/
 app/.project

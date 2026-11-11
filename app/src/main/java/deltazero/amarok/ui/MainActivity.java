@@ -20,6 +20,7 @@ import deltazero.amarok.R;
 import deltazero.amarok.filehider.NoneFileHider;
 import deltazero.amarok.ui.settings.SettingsActivity;
 import deltazero.amarok.ui.settings.SwitchFileHiderActivity;
+import deltazero.amarok.utils.OperationJournal;
 import deltazero.amarok.utils.PermissionUtil;
 import deltazero.amarok.utils.UpdateUtil;
 import nl.dionsegijn.konfetti.xml.KonfettiView;
@@ -54,9 +55,11 @@ public class MainActivity extends AmarokActivity {
 
         // Setup observer
         Hider.state.observe(this, this::refreshUi);
+        Hider.progress.observe(this, this::refreshProgress);
 
         // Show welcome dialog
-        if (PrefMgr.getShowWelcome()) {
+        boolean showWelcome = PrefMgr.getShowWelcome();
+        if (showWelcome) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.welcome_title)
                     .setMessage(R.string.welcome_msg)
@@ -73,6 +76,9 @@ public class MainActivity extends AmarokActivity {
         } else {
             PermissionUtil.requestStoragePermission(this);
         }
+
+        if (!showWelcome)
+            maybeShowRecoveryNotice();
 
         // Check Hider availability
         PrefMgr.getFileHider(this).tryToActive((fileHiderClass, succeed, msg) -> {
@@ -94,8 +100,13 @@ public class MainActivity extends AmarokActivity {
     }
 
     public void changeStatus(View view) {
-        if (Hider.getState() == Hider.State.HIDDEN) Hider.unhide(this);
-        else Hider.hide(this);
+        Hider.State state = Hider.getState();
+        if (state == Hider.State.PROCESSING)
+            Hider.cancel();
+        else if (state == Hider.State.HIDDEN)
+            Hider.unhide(this);
+        else
+            Hider.hide(this);
     }
 
     public void showMoreSettings(View view) {
@@ -151,9 +162,59 @@ public class MainActivity extends AmarokActivity {
             case PROCESSING -> {
                 // Processing
                 piProcessStatus.show();
-                btChangeStatus.setEnabled(false);
+                btChangeStatus.setEnabled(true);
+                btChangeStatus.setText(R.string.cancel);
+                btChangeStatus.setIconResource(R.drawable.cancel_presentation_24dp_1f1f1f_fill0_wght400_grad0_opsz24);
+                btSetHideFiles.setEnabled(false);
+                tvStatus.setText(R.string.processing);
+                refreshProgress(Hider.progress.getValue());
             }
         }
+    }
+
+    private void refreshProgress(Hider.Progress progress) {
+        if (progress == null || Hider.getState() != Hider.State.PROCESSING)
+            return;
+
+        if (progress.stalled) {
+            tvStatusInfo.setText(R.string.operation_stalled);
+            return;
+        }
+
+        String phase = Hider.getPhaseLabel(this, progress.phase);
+        if (progress.total > 0) {
+            tvStatusInfo.setText(getString(R.string.operation_progress,
+                    progress.processed, progress.total, phase));
+        } else {
+            tvStatusInfo.setText(phase);
+        }
+    }
+
+    private void maybeShowRecoveryNotice() {
+        if (Hider.getState() == Hider.State.PROCESSING)
+            return;
+
+        OperationJournal.Entry entry = OperationJournal.getUnfinished(this);
+        if (entry == null)
+            return;
+
+        String action = getString(entry.hide
+                ? R.string.operation_hiding_title
+                : R.string.operation_unhiding_title);
+        String phase = Hider.getPhaseLabel(this, entry.phase);
+
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.previous_operation_title)
+                .setMessage(getString(R.string.previous_operation_message,
+                        action, entry.processed, entry.total, phase))
+                .setPositiveButton(R.string.previous_operation_unhide, (dialog, which) -> {
+                    OperationJournal.acknowledge(this);
+                    Hider.unhide(this);
+                })
+                .setNegativeButton(R.string.previous_operation_dismiss,
+                        (dialog, which) -> OperationJournal.acknowledge(this))
+                .setCancelable(false)
+                .show();
     }
 
     @Override

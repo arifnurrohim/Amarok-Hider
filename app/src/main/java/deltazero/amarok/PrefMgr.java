@@ -47,6 +47,7 @@ public final class PrefMgr {
     public static final String ENABLE_OBFUSCATE_FILE_HEADER = "enableObfuscateFileHeader";
     public static final String ENABLE_OBFUSCATE_TEXT_FILE = "enableObfuscateTextFile";
     public static final String ENABLE_OBFUSCATE_TEXT_FILE_ENHANCED = "enableObfuscateTextFileEnhanced";
+    public static final String ENABLE_OBFUSCATE_FOLDER_NAME = "enableObfuscateFolderName";
     public static final String ENABLE_QUICK_HIDE_SERVICE = "enableQuickHideService";
     public static final String ENABLE_PANIC_BUTTON = "enablePanicButton";
     public static final String AMAROK_PASSWORD = "amarokPassword";
@@ -151,6 +152,15 @@ public final class PrefMgr {
 
     public static void setEnableObfuscateTextFileEnhanced(boolean ifObfuscateTextFileEnhanced) {
         mPrefEditor.putBoolean(ENABLE_OBFUSCATE_TEXT_FILE_ENHANCED, ifObfuscateTextFileEnhanced);
+        mPrefEditor.apply();
+    }
+
+    public static boolean getEnableObfuscateFolderName() {
+        return mPrefs.getBoolean(ENABLE_OBFUSCATE_FOLDER_NAME, false);
+    }
+
+    public static void setEnableObfuscateFolderName(boolean ifObfuscateFolderName) {
+        mPrefEditor.putBoolean(ENABLE_OBFUSCATE_FOLDER_NAME, ifObfuscateFolderName);
         mPrefEditor.apply();
     }
 
